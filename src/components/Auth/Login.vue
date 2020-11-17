@@ -13,15 +13,14 @@
             <v-toolbar-title class="display-1">Login Form</v-toolbar-title>
           </v-toolbar>
           <v-card-text>
-            <form class="mt-5">
+            <v-form class="mt-5">
               <v-text-field
                 v-model="email"
                 :error-messages="emailErrors"
                 prepend-icon="mdi-face"
                 label="E-mail"
                 required
-                @input="$v.email.$touch()"
-                @change="showSubmitButton()"
+                @input="[$v.email.$touch(), showSubmitButton()]"
                 @blur="$v.email.$touch()"
               ></v-text-field>
               <v-text-field
@@ -33,8 +32,7 @@
                 :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
                 :type="showPassword ? 'text' : 'password'"
                 @click:append="showPassword = !showPassword"
-                @input="$v.password.$touch()"
-                @change="showSubmitButton()"
+                @input="[$v.password.$touch(), showSubmitButton()]"
                 @blur="$v.password.$touch()"
                 v-model="password"
               ></v-text-field>
@@ -50,7 +48,7 @@
                   Login
                 </v-btn>
               </v-card-actions>
-            </form></v-card-text
+            </v-form></v-card-text
           >
         </v-card>
       </v-flex>
