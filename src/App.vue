@@ -22,7 +22,9 @@
         class="hidden-md-and-up"
       ></v-app-bar-nav-icon>
 
-      <v-toolbar-title>Ride gear</v-toolbar-title>
+      <v-toolbar-title>
+        <router-link to="/" tag="span" class="pointer">Ride gear</router-link>
+      </v-toolbar-title>
 
       <v-spacer></v-spacer>
 
@@ -71,5 +73,9 @@ export default {
 <style lang="scss">
 .app-header__link:not(:last-of-type) {
   margin-right: 10px;
+}
+.pointer {
+  cursor: pointer;
+  text-transform: uppercase;
 }
 </style>
