@@ -38,7 +38,6 @@ export default {
           done: false,
         },
       ],
-      settings: [],
     };
   },
   methods: {
