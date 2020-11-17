@@ -12,29 +12,41 @@
           >
             <v-toolbar-title class="display-1">Login Form</v-toolbar-title>
           </v-toolbar>
-          <v-card-text
-            ><form>
-              <v-text-field
-                v-model="name"
-                :error-messages="nameErrors"
-                label="Name"
-                prepend-icon="mdi-face"
-                required
-                @input="$v.name.$touch()"
-                @blur="$v.name.$touch()"
-              ></v-text-field>
+          <v-card-text>
+            <form class="mt-5">
               <v-text-field
                 v-model="email"
                 :error-messages="emailErrors"
-                prepend-icon="mdi-lock"
+                prepend-icon="mdi-face"
                 label="E-mail"
                 required
                 @input="$v.email.$touch()"
+                @change="showSubmitButton()"
                 @blur="$v.email.$touch()"
               ></v-text-field>
+              <v-text-field
+                required
+                hint="At least 6 characters"
+                prepend-icon="mdi-lock"
+                label="Password"
+                :error-messages="passwordErrors"
+                :append-icon="showPassword ? 'mdi-eye' : 'mdi-eye-off'"
+                :type="showPassword ? 'text' : 'password'"
+                @click:append="showPassword = !showPassword"
+                @input="$v.password.$touch()"
+                @change="showSubmitButton()"
+                @blur="$v.password.$touch()"
+                v-model="password"
+              ></v-text-field>
 
-              <v-card-actions class="justify-end">
-                <v-btn color="blue darken-4" dark @click="submit" large>
+              <v-card-actions class="justify-end mt-3">
+                <v-btn
+                  color="blue darken-4"
+                  large
+                  :dark="isValid"
+                  :disabled="!isValid"
+                  @click="submit"
+                >
                   Login
                 </v-btn>
               </v-card-actions>
@@ -54,22 +66,24 @@ export default {
   mixins: [validationMixin],
 
   validations: {
-    name: { required, minLength: minLength(2) },
     email: { required, email },
+    password: { required, minLength: minLength(6) },
   },
 
   data: () => ({
-    name: "",
     email: "",
+    password: "",
+    showPassword: false,
+    isValid: false,
   }),
 
   computed: {
-    nameErrors() {
+    passwordErrors() {
       const errors = [];
-      if (!this.$v.name.$dirty) return errors;
-      !this.$v.name.minLength &&
-        errors.push("Name must be at least 2 characters long");
-      !this.$v.name.required && errors.push("Name is required.");
+      if (!this.$v.password.$dirty) return errors;
+      !this.$v.password.minLength &&
+        errors.push("Password must be at least 6 characters long");
+      !this.$v.password.required && errors.push("Password is required.");
       return errors;
     },
     emailErrors() {
@@ -82,8 +96,19 @@ export default {
   },
 
   methods: {
+    showSubmitButton() {
+      this.$v.$invalid ? (this.isValid = false) : (this.isValid = true);
+    },
     submit() {
       this.$v.$touch();
+      if (!this.$v.$invalid) {
+        const user = {
+          email: this.email,
+          password: this.password,
+        };
+
+        console.log(user);
+      }
     },
   },
 };
