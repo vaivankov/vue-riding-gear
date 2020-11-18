@@ -34,8 +34,8 @@
               <v-img :src="ad.previewImage" height="200px"> </v-img>
               <v-card-title primary-title>
                 <div>
-                  <h3 class="headline mb-0">{{ ad.title }}</h3>
-                  <div>{{ ad.description }}</div>
+                  <h3 class="headline mb-0" v-text="ad.title"></h3>
+                  <div v-text="ad.price"></div>
                 </div>
               </v-card-title>
               <v-card-actions>

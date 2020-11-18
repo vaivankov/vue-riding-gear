@@ -15,7 +15,7 @@
             <v-flex xs8>
               <v-card-text>
                 <h2 class="text--primary" v-text="ad.title"></h2>
-                <p v-text="ad.description"></p>
+                <p v-text="ad.price"></p>
               </v-card-text>
               <v-card-actions>
                 <v-btn class="info" :to="'/ad/' + ad.id">Open</v-btn>

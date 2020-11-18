@@ -3,16 +3,11 @@
     <v-layout row>
       <v-flex xs12>
         <v-card>
-          <v-img
-            src="http://s3-us-west-2.amazonaws.com/iconmotosports/gear/helmets/_hero/IconAirframeProGlossWhiteHelmetMainFeature.jpg?mtime=20161212113946"
-            height="300px"
-          ></v-img>
+          <v-img :src="ad.fullImage" height="300px"></v-img>
           <v-card-text>
-            <h1 class="text--primary">Lorem</h1>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-              Distinctio, ipsa?
-            </p>
+            <h1 class="text--primary" v-text="ad.title"></h1>
+            <p v-text="ad.price"></p>
+            <p v-text="ad.description"></p>
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
@@ -27,14 +22,16 @@
 
 <script>
 export default {
+  props: ["id"],
   data() {
     return {
       loading: true,
     };
   },
   computed: {
-    ads() {
-      return this.$store.getters.ads;
+    ad() {
+      const id = this.id;
+      return this.$store.getters.adById(id);
     },
   },
   mounted() {
