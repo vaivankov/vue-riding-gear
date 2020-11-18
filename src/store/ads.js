@@ -69,8 +69,19 @@ export default {
       },
     ],
   },
-  mutations: {},
-  actions: {},
+  mutations: {
+    createAd(state,payLoad) {
+      state.ads.push(payLoad)
+    }
+  },
+  actions: {
+    createAd({commit},payLoad) {
+      const id = (Math.random()).toString().slice(2);
+      payLoad.id = id;
+
+      commit('createAd', payLoad);
+    },
+  },
   getters: {
     ads (state) {
       return state.ads
