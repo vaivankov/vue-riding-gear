@@ -55,8 +55,9 @@
                 <v-btn
                   color="blue darken-4"
                   large
-                  :dark="isValid"
-                  :disabled="!isValid"
+                  :dark="!loading && isValid"
+                  :loading="loading"
+                  :disabled="!isValid || loading"
                   @click="submit"
                 >
                   Create account
@@ -76,13 +77,11 @@ import { required, minLength, email, sameAs } from "vuelidate/lib/validators";
 
 export default {
   mixins: [validationMixin],
-
   validations: {
     email: { required, email },
     password: { required, minLength: minLength(6) },
     confirmPassword: { required, sameAsPassword: sameAs("password") },
   },
-
   data: () => ({
     email: "",
     password: "",
@@ -90,8 +89,10 @@ export default {
     showPassword: false,
     isValid: false,
   }),
-
   computed: {
+    loading() {
+      return this.$store.getters.loading;
+    },
     passwordErrors() {
       const errors = [];
       if (!this.$v.password.$dirty) return errors;
@@ -116,7 +117,6 @@ export default {
       return errors;
     },
   },
-
   methods: {
     showSubmitButton() {
       this.isValid = !this.$v.$invalid;
@@ -129,7 +129,10 @@ export default {
           password: this.password,
         };
 
-        this.$store.dispatch("registerUser", user);
+        this.$store
+          .dispatch("registerUser", user)
+          .then(() => this.$router.push("/"))
+          .catch((err) => console.error(err.message));
       }
     },
   },
