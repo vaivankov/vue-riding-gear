@@ -23,7 +23,6 @@ export default {
     },
     loadAds(state, payLoad) {
       state.ads = payLoad
-      console.log(state.ads)
     }
   },
   actions: {
