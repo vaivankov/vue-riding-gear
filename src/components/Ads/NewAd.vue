@@ -42,6 +42,7 @@
                     color="blue darken-4"
                     large
                     :dark="isValid"
+                    :loading="loading"
                     :disabled="!isValid"
                     @click="createAd()"
                   >
@@ -76,12 +77,16 @@ export default {
     description: "",
     isValid: false,
     loader: null,
-    loading: false,
     promo: true,
     previewImage:
       "http://s3-us-west-2.amazonaws.com/iconmotosports/gear/helmets/_r300/AirfliteStealthBlackProfile.jpg?mtime=20200120111201",
+    fullImage:
+      "http://s3-us-west-2.amazonaws.com/iconmotosports/videos/poster/_wFull/AirfliteStealthBlackMainImage.jpg?mtime=20200410132158",
   }),
   computed: {
+    loading() {
+      return this.$store.getters.loading;
+    },
     titleErrors() {
       const errors = [];
       if (!this.$v.title.$dirty) return errors;
@@ -113,8 +118,12 @@ export default {
         description: this.description,
         promo: this.promo,
         previewImage: this.previewImage,
+        fullImage: this.fullImage,
       };
-      this.$store.dispatch("createAd", ad);
+      this.$store
+        .dispatch("createAd", ad)
+        .then(() => this.$router.push("/list"))
+        .catch((err) => console.error(err.message));
     },
   },
   watch: {

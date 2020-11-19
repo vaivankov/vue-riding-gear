@@ -1,3 +1,18 @@
+import firebase from "firebase";
+
+class Ad {
+  constructor(params) {
+    this.title = params.title || ''
+    this.description = params.description || ''
+    this.ownerId = params.ownerId || ''
+    this.previewImage = params.previewImage || ''
+    this.fullImage = params.fullImage || ''
+    this.promo = params.promo || false
+    this.price = params.price || '$'
+    this.id = params.id || null
+  }
+}
+
 export default {
   state: {
     ads: [
@@ -70,28 +85,45 @@ export default {
     ],
   },
   mutations: {
-    createAd(state,payLoad) {
+    createAd(state, payLoad) {
       state.ads.push(payLoad)
     }
   },
   actions: {
-    createAd({commit},payLoad) {
-      const id = (Math.random()).toString().slice(2);
-      payLoad.id = id;
+    async createAd({ commit, getters }, payLoad) {
+      commit('clearError');
+      commit('setLoading', true);
+      try {
+        let newAd = new Ad(payLoad)
 
-      commit('createAd', payLoad);
+        newAd.ownerId = getters.user.id
+
+        const ad =
+          await firebase.database()
+            .ref('ads')
+            .push(newAd)
+
+        newAd.id = ad.key
+
+        commit('setLoading', false);
+        commit('createAd', newAd)
+      } catch (err) {
+        commit('setError', err.message);
+        commit('setLoading', false);
+        throw err
+      }
     },
   },
   getters: {
-    ads (state) {
+    ads(state) {
       return state.ads
     },
-    promoAds (state) {
+    promoAds(state) {
       return state.ads.filter(ad => {
         return ad.promo
       })
     },
-    myAds (state) {
+    myAds(state) {
       return state.ads
     },
     adById(state) {
