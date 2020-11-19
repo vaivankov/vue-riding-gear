@@ -34,10 +34,5 @@ export default {
       return this.$store.getters.adById(id);
     },
   },
-  mounted() {
-    setTimeout(() => {
-      this.loading = false;
-    }, 1000);
-  },
 };
 </script>

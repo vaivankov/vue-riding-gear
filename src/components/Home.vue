@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="!loading">
     <v-container fluid>
       <v-layout row>
         <v-flex xs12>
@@ -41,7 +41,7 @@
               <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn text :to="'/ad/' + ad.id">Open</v-btn>
-                <v-btn raised class="primary">Buy</v-btn>
+                <v-btn raised dark class="blue darken-4">Buy</v-btn>
               </v-card-actions>
             </div>
           </v-card>
@@ -49,27 +49,35 @@
       </v-layout>
     </v-container>
   </div>
+  <div v-else>
+    <v-layout row>
+      <v-flex
+        xs12
+        class="d-flex align-center justify-center"
+        style="height: calc(100vh - 100px)"
+      >
+        <v-progress-circular
+          :size="100"
+          color="blue darken-4"
+          indeterminate
+        ></v-progress-circular>
+      </v-flex>
+    </v-layout>
+  </div>
 </template>
 
 <script>
 export default {
-  data() {
-    return {
-      loading: true,
-    };
-  },
   computed: {
+    loading() {
+      return this.$store.getters.loading;
+    },
     promoAds() {
       return this.$store.getters.promoAds;
     },
     ads() {
       return this.$store.getters.ads;
     },
-  },
-  mounted() {
-    setTimeout(() => {
-      this.loading = false;
-    }, 1000);
   },
 };
 </script>
