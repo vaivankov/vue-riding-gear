@@ -43,11 +43,21 @@ export default {
         commit('setError', err.message)
         throw err
       }
+    },
+    autoLoginUser({ commit }, payLoad) {
+      commit('setUser', new User(payLoad.uid))
+    },
+    userLogout({ commit }) {
+      firebase.default.auth().signOut()
+      commit('setUser', null)
     }
   },
   getters: {
     user(state) {
       return state.user
+    },
+    isUserLoggedIn(state) {
+      return state.user !== null
     }
   },
 }
