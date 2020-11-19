@@ -14,6 +14,7 @@
                 @input="[$v.title.$touch(), showUploadButton()]"
                 @blur="$v.title.$touch()"
               ></v-text-field>
+              <v-text-field v-model="price" label="Ad price"></v-text-field>
               <v-textarea
                 v-model="description"
                 label="Ad description"
@@ -48,9 +49,7 @@
                   </v-btn>
                 </v-row>
                 <v-row>
-                  <v-img
-                    src="http://s3-us-west-2.amazonaws.com/iconmotosports/gear/helmets/_r300/AFPSolidWhiteProfile-0101-8031.jpg?mtime=20161212113716"
-                  ></v-img>
+                  <v-img :src="previewImage"></v-img>
                 </v-row>
               </v-container>
             </v-form>
@@ -67,19 +66,20 @@ import { required, minLength } from "vuelidate/lib/validators";
 
 export default {
   mixins: [validationMixin],
-
   validations: {
     title: { required, minLength: minLength(2) },
     description: { required, minLength: minLength(2) },
   },
-
   data: () => ({
     title: "",
+    price: "",
     description: "",
     isValid: false,
     loader: null,
     loading: false,
     promo: true,
+    previewImage:
+      "http://s3-us-west-2.amazonaws.com/iconmotosports/gear/helmets/_r300/AirfliteStealthBlackProfile.jpg?mtime=20200120111201",
   }),
   computed: {
     titleErrors() {
@@ -99,7 +99,6 @@ export default {
       return errors;
     },
   },
-
   methods: {
     showUploadButton() {
       this.$v.$invalid ? (this.isValid = false) : (this.isValid = true);
@@ -110,10 +109,12 @@ export default {
     createAd() {
       const ad = {
         title: this.title,
+        price: "$" + this.price,
         description: this.description,
         promo: this.promo,
+        previewImage: this.previewImage,
       };
-      console.log(ad);
+      this.$store.dispatch("createAd", ad);
     },
   },
   watch: {

@@ -13,6 +13,7 @@ const routes = [
   {
     path: '/ad/:id',
     name: 'ad',
+    props: true,
     component: () => import('@/components/Ads/Ad')
   },
   {
