@@ -49,6 +49,20 @@
         <router-view></router-view>
       </v-container>
     </v-main>
+
+    <template v-if="error"
+      ><v-snackbar
+        multi-line
+        timeout="5000"
+        color="error"
+        @input="closeError"
+        :value="true"
+        class="d-flex"
+      >
+        {{ error }}
+        <v-btn dark text @click="closeError"> Close </v-btn>
+      </v-snackbar></template
+    >
   </v-app>
 </template>
 
@@ -66,6 +80,16 @@ export default {
         { title: "My ads", icon: "mdi-format-list-bulleted", url: "/list" },
       ],
     };
+  },
+  methods: {
+    closeError() {
+      this.$store.dispatch("clearError");
+    },
+  },
+  computed: {
+    error() {
+      return this.$store.getters.error;
+    },
   },
 };
 </script>
