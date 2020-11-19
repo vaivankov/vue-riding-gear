@@ -132,7 +132,7 @@ export default {
         this.$store
           .dispatch("registerUser", user)
           .then(() => this.$router.push("/"))
-          .catch((err) => console.error(err));
+          .catch((err) => console.error(err.message));
       }
     },
   },
