@@ -3,7 +3,7 @@
     <v-container fluid>
       <v-layout row>
         <v-flex xs12>
-          <v-carousel>
+          <v-carousel cycle interval="2000">
             <v-carousel-item
               v-for="ad in promoAds"
               :to="'/ad/' + ad.id"
