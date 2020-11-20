@@ -1,10 +1,12 @@
 import Vue from 'vue'
+import BuyModalComponent from "./components/Shared/BuyModal";
 import App from './App.vue'
 import router from './router'
 import store from './store'
 import vuetify from './plugins/vuetify';
 import firebase from "firebase";
 
+Vue.component('app-buy-modal', BuyModalComponent)
 Vue.config.productionTip = false
 
 new Vue({

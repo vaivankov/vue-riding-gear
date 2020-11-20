@@ -9,7 +9,7 @@ class Ad {
     this.fullImage = params.fullImage || ''
     this.promo = params.promo || false
     this.price = params.price || '$'
-    this.id = params.id || null
+    this.id = params.id || Date.now().toString()
   }
 }
 
@@ -42,12 +42,9 @@ export default {
 
         newAd.ownerId = getters.user.id
 
-        const ad =
-          await firebase.database()
-            .ref('ads')
-            .push(newAd)
-
-        newAd.id = ad.key
+        firebase.database()
+          .ref('ads')
+          .push(newAd)
 
         commit('setLoading', false);
         commit('createAd', newAd)

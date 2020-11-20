@@ -49,7 +49,7 @@
             <v-card-actions>
               <v-spacer></v-spacer>
               <v-btn text :to="'/ad/' + ad.id">Open</v-btn>
-              <v-btn raised dark class="blue darken-4">Buy</v-btn>
+              <app-buy-modal :ad="ad"></app-buy-modal>
             </v-card-actions>
           </v-card>
         </v-flex>
