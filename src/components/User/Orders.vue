@@ -17,7 +17,9 @@
             <v-list-item-subtitle v-text="order.phone"></v-list-item-subtitle>
           </v-list-item-content>
           <v-list-item-action>
-            <v-btn :to="'/ad/' + order.adId" class="primary">Open</v-btn>
+            <v-btn :to="'/ad/' + order.adId" dark class="blue darken-4"
+              >Open</v-btn
+            >
           </v-list-item-action>
         </v-list-item>
       </v-flex>

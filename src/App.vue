@@ -93,7 +93,7 @@ export default {
     },
     logout() {
       this.$store.dispatch("userLogout");
-      this.$router.push("/");
+      this.$router.currentRoute.name !== "home" && this.$router.push("/");
     },
   },
   computed: {

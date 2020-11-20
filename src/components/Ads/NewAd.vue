@@ -8,16 +8,24 @@
             <v-form class="mt-5">
               <v-text-field
                 v-model="title"
-                label="Ad title"
+                label="Title"
                 required
                 :error-messages="titleErrors"
                 @input="[$v.title.$touch(), showUploadButton()]"
                 @blur="$v.title.$touch()"
               ></v-text-field>
-              <v-text-field v-model="price" label="Ad price"></v-text-field>
+              <v-text-field
+                v-model="previewImage"
+                label="Preview image URL"
+              ></v-text-field>
+              <v-text-field
+                v-model="fullImage"
+                label="Full image URL"
+              ></v-text-field>
+              <v-text-field v-model="price" label="Price"></v-text-field>
               <v-textarea
                 v-model="description"
-                label="Ad description"
+                label="Description"
                 hint="Hint text"
                 required
                 :error-messages="descriptionErrors"
@@ -25,31 +33,22 @@
                 @blur="$v.description.$touch()"
               ></v-textarea>
               <v-container
-                ><v-row class="justify-space-between"
-                  ><v-btn
-                    :loading="loading"
-                    :disabled="loading"
-                    color="blue-grey"
-                    class="white--text"
-                    large
-                    @click="loader = 'loading'"
-                  >
-                    Upload
-                    <v-icon right dark> mdi-cloud-upload </v-icon>
-                  </v-btn>
-                  <v-switch v-model="promo" label="Add to promo?"></v-switch>
+                ><v-row class="justify-space-between">
                   <v-btn
                     color="blue darken-4"
                     large
                     :dark="isValid"
+                    :loading="loading"
                     :disabled="!isValid"
                     @click="createAd()"
                   >
                     Create
                   </v-btn>
+                  <v-switch v-model="promo" label="Add to promo?"></v-switch>
                 </v-row>
                 <v-row>
                   <v-img :src="previewImage"></v-img>
+                  <v-img :src="fullImage"></v-img>
                 </v-row>
               </v-container>
             </v-form>
@@ -76,12 +75,14 @@ export default {
     description: "",
     isValid: false,
     loader: null,
-    loading: false,
-    promo: true,
-    previewImage:
-      "http://s3-us-west-2.amazonaws.com/iconmotosports/gear/helmets/_r300/AirfliteStealthBlackProfile.jpg?mtime=20200120111201",
+    promo: false,
+    previewImage: "",
+    fullImage: "",
   }),
   computed: {
+    loading() {
+      return this.$store.getters.loading;
+    },
     titleErrors() {
       const errors = [];
       if (!this.$v.title.$dirty) return errors;
@@ -113,8 +114,12 @@ export default {
         description: this.description,
         promo: this.promo,
         previewImage: this.previewImage,
+        fullImage: this.fullImage,
       };
-      this.$store.dispatch("createAd", ad);
+      this.$store
+        .dispatch("createAd", ad)
+        .then(() => this.$router.push("/list"))
+        .catch((err) => console.error(err.message));
     },
   },
   watch: {
