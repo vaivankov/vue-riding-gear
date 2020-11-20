@@ -18,7 +18,7 @@
                 <p v-text="ad.price"></p>
               </v-card-text>
               <v-card-actions>
-                <v-btn color="blue darken-4" dark :to="'/ad/' + ad.id"
+                <v-btn color="primary" dark :to="'/ad/' + ad.id"
                   >Open</v-btn
                 >
               </v-card-actions>
@@ -40,7 +40,7 @@
       >
         <v-progress-circular
           :size="100"
-          color="blue darken-4"
+          color="primary"
           indeterminate
         ></v-progress-circular>
       </v-flex>

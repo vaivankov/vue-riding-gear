@@ -9,7 +9,7 @@
                 <v-progress-circular
                   style="position: absolute; top: 50%; left: 50%"
                   indeterminate
-                  color="blue darken-4"
+                  color="primary"
                 ></v-progress-circular>
               </v-row>
             </template>
@@ -35,7 +35,7 @@
       >
         <v-progress-circular
           :size="100"
-          color="blue darken-4"
+          color="primary"
           indeterminate
         ></v-progress-circular>
       </v-flex>

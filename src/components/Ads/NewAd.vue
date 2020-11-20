@@ -35,7 +35,7 @@
               <v-container
                 ><v-row class="justify-space-between">
                   <v-btn
-                    color="blue darken-4"
+                    color="primary"
                     large
                     :dark="isValid"
                     :loading="loading"

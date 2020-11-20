@@ -2,7 +2,7 @@
   <div class="text-center">
     <v-dialog v-model="modal" width="500">
       <template v-slot:activator="{ on, attrs }">
-        <v-btn class="blue darken-4 mr-2" raised dark v-bind="attrs" v-on="on"
+        <v-btn class="primary mr-2" raised dark v-bind="attrs" v-on="on"
           >Buy</v-btn
         >
       </template>

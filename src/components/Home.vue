@@ -15,7 +15,7 @@
                     <v-progress-circular
                       style="position: absolute; top: 50%; left: 50%"
                       indeterminate
-                      color="blue darken-4"
+                      color="primary"
                     ></v-progress-circular>
                   </v-row>
                 </template>
@@ -35,7 +35,7 @@
                   <v-progress-circular
                     style="position: absolute; top: 50%; left: 50%"
                     indeterminate
-                    color="blue darken-4"
+                    color="primary"
                   ></v-progress-circular>
                 </v-row>
               </template>
@@ -49,7 +49,7 @@
             <v-card-actions>
               <v-spacer></v-spacer>
               <v-btn text :to="'/ad/' + ad.id">Open</v-btn>
-              <app-buy-modal :ad="ad"></app-buy-modal>
+              <app-buy-modal class="ml-2" :ad="ad"></app-buy-modal>
             </v-card-actions>
           </v-card>
         </v-flex>
@@ -65,7 +65,7 @@
       >
         <v-progress-circular
           :size="100"
-          color="blue darken-4"
+          color="primary"
           indeterminate
         ></v-progress-circular>
       </v-flex>

@@ -1,9 +1,9 @@
 import Vue from 'vue'
 import BuyModalComponent from "./components/Shared/BuyModal";
+import vuetify from './plugins/vuetify';
 import App from './App.vue'
 import router from './router'
 import store from './store'
-import vuetify from './plugins/vuetify';
 import firebase from "firebase";
 
 Vue.component('app-buy-modal', BuyModalComponent)
@@ -27,7 +27,7 @@ new Vue({
 
     firebase.initializeApp(firebaseConfig);
 
-    firebase.default.auth().onAuthStateChanged((user) => {
+    firebase.auth().onAuthStateChanged((user) => {
       if (user) {
         this.$store.dispatch('autoLoginUser', user)
       }
