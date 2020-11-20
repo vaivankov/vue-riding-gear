@@ -23,6 +23,14 @@ export default {
     },
     loadAds(state, payLoad) {
       state.ads = payLoad
+    },
+    updateAd(state, payLoad) {
+      const ad = state.ads.find((a) => { return a.id === payLoad.id })
+      ad.title = payLoad.title
+      ad.description = payLoad.description
+      ad.price = payLoad.price
+      ad.previewImage = payLoad.previewImage
+      ad.fullImage = payLoad.fullImage
     }
   },
   actions: {
@@ -70,6 +78,20 @@ export default {
         commit('setLoading', false);
         throw err
       }
+    },
+    async updateAd({ commit }, payLoad) {
+      commit('clearError')
+      commit('setLoading', true)
+      try {
+        await firebase.database().ref('ads')
+          .child(payLoad.id).update(payLoad)
+        commit('updateAd', payLoad);
+        commit('setLoading', false);
+      } catch (err) {
+        commit('setError', err.message);
+        commit('setLoading', false);
+        throw err
+      }
     }
   },
   getters: {
@@ -81,8 +103,8 @@ export default {
         return ad.promo
       })
     },
-    myAds(state) {
-      return state.ads
+    myAds(state, getters) {
+      return state.ads.filter((ad) => { return ad.ownerId === getters.user.id })
     },
     adById(state) {
       return (adId) => {
