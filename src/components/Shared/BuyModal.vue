@@ -85,14 +85,17 @@ export default {
       this.modal = false;
     },
     onSend() {
+      !this.$store.getters.user && this.$router.push("/login?loginError=true");
+
       this.localLoading = true;
+
       this.$store
         .dispatch("createOrder", {
           name: this.name !== "" ? this.name : "",
           phone: this.phone !== "" ? this.phone : "",
           additional: this.additional !== "" ? this.additional : "",
           adId: this.ad.id,
-          ownerId: this.ad.ownerId,
+          userId: this.$store.getters.user.id,
         })
         .finally(() => {
           this.localLoading = false;
