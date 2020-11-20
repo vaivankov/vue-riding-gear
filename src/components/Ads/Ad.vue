@@ -9,7 +9,7 @@
                 <v-progress-circular
                   style="position: absolute; top: 50%; left: 50%"
                   indeterminate
-                  color="blue darken-4"
+                  color="primary"
                 ></v-progress-circular>
               </v-row>
             </template>
@@ -22,7 +22,7 @@
           <v-card-actions>
             <v-spacer></v-spacer>
             <add-edit-ad-modal v-if="isOwner" :ad="ad"></add-edit-ad-modal>
-            <v-btn class="success">Buy</v-btn>
+            <app-buy-modal :ad="ad"></app-buy-modal>
           </v-card-actions>
         </v-card>
       </v-flex>
@@ -35,7 +35,7 @@
       >
         <v-progress-circular
           :size="100"
-          color="blue darken-4"
+          color="primary"
           indeterminate
         ></v-progress-circular>
       </v-flex>
@@ -56,7 +56,9 @@ export default {
       return this.$store.getters.loading;
     },
     isOwner() {
-      return this.ad.ownerId === this.$store.getters.user.id;
+      return this.$store.getters.user
+        ? this.ad.ownerId === this.$store.getters.user.id
+        : false;
     },
   },
   components: {

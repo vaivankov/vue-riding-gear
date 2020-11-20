@@ -20,11 +20,26 @@
               <v-list-item-title @click="logout">Logout</v-list-item-title>
             </v-list-item-content>
           </v-list-item>
+          <v-list-item>
+            <v-list-item-icon>
+              <v-icon dark v-if="this.$vuetify.theme.dark"
+                >mdi-brightness-5</v-icon
+              >
+              <v-icon light v-if="!this.$vuetify.theme.dark"
+                >mdi-brightness-3</v-icon
+              >
+            </v-list-item-icon>
+            <v-list-item-content>
+              <v-list-item-title @click="changeTheme"
+                >Change theme</v-list-item-title
+              >
+            </v-list-item-content>
+          </v-list-item>
         </v-list-item-group>
       </v-list>
     </v-navigation-drawer>
 
-    <v-app-bar app dark color="blue darken-4">
+    <v-app-bar app dark color="primary">
       <v-app-bar-nav-icon
         @click="drawer = !drawer"
         class="hidden-md-and-up"
@@ -52,6 +67,12 @@
         <v-btn elevation="2" large text @click="logout" v-if="isUserLoggedIn">
           <v-icon dark left>mdi-exit-to-app</v-icon>
           Logout
+        </v-btn>
+        <v-btn elevation="2" class="ml-4" large text @click="changeTheme">
+          <v-icon dark v-if="this.$vuetify.theme.dark">mdi-brightness-5</v-icon>
+          <v-icon dark v-if="!this.$vuetify.theme.dark"
+            >mdi-brightness-3</v-icon
+          >
         </v-btn>
       </div>
     </v-app-bar>
@@ -94,6 +115,9 @@ export default {
     logout() {
       this.$store.dispatch("userLogout");
       this.$router.currentRoute.name !== "home" && this.$router.push("/");
+    },
+    changeTheme() {
+      this.$vuetify.theme.dark = !this.$vuetify.theme.dark;
     },
   },
   computed: {

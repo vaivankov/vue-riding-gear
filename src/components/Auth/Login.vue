@@ -5,7 +5,7 @@
         <v-card elevation="10" shaped width="600">
           <v-toolbar
             class="d-flex align-center"
-            color="blue darken-4"
+            color="primary"
             dark
             extended
             extension-height="30"
@@ -39,7 +39,7 @@
 
               <v-card-actions class="justify-end mt-3">
                 <v-btn
-                  color="blue darken-4"
+                  color="primary"
                   large
                   :dark="!loading && isValid"
                   :loading="loading"
